@@ -3,11 +3,15 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select';
 	import { Input } from '$lib/components/ui/input';
-	import { Switch } from '$lib/components/ui/switch';
 	import { Calculator, Shield } from '@lucide/svelte';
 	import { type Job, jobNames } from '$lib/dataset/jobs';
 	import { titleCase } from 'title-case';
 	import Result from './damage-calculator/result.svelte';
+	import { bossNames } from '$lib/dataset/bosses';
+	import { petNames } from '$lib/dataset/pets';
+	import buffsSet, { availableBuffJobs } from '$lib/dataset/buffs';
+	import BuffsSwitch from './damage-calculator/buffs-switch.svelte';
+	import PetSelect from './damage-calculator/pet-select.svelte';
 
 	let stats: {
 		class: Job | '';
@@ -29,12 +33,23 @@
 
 	let selectedPet = $state('');
 	let selectedBoss = $state('');
-	let buffs = $state({
-		striking: false,
-		blessingOfLight: false,
-		convictionAura: false,
-		battleHowl: false
-	});
+
+	let activeBuffs: {
+		[buffName: string]: boolean;
+	} = $state(
+		availableBuffJobs.reduce(
+			(acc, job) => {
+				buffsSet[job].flatMap((buff) => {
+					acc[buff.name] = false;
+				});
+
+				return acc;
+			},
+			{} as {
+				[buffName: string]: boolean;
+			}
+		)
+	);
 
 	let results = $state({
 		totalDamage: 0,
@@ -56,12 +71,7 @@
 		};
 		selectedPet = '';
 		selectedBoss = '';
-		buffs = {
-			striking: false,
-			blessingOfLight: false,
-			convictionAura: false,
-			battleHowl: false
-		};
+		activeBuffs = {};
 		results = {
 			totalDamage: 0,
 			finalDamage: 0,
@@ -72,7 +82,7 @@
 	};
 </script>
 
-<div class="mb-32 min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-12 pb-32">
 	<div class="mx-auto max-w-6xl">
 		<!-- Header -->
 		<div class="mb-8 text-center">
@@ -96,7 +106,7 @@
 					</CardTitle>
 				</CardHeader>
 				<CardContent class="space-y-4">
-					<div class="grid grid-cols-2 gap-4">
+					<div class="grid grid-cols-3 gap-4">
 						<div class="space-y-2">
 							<Label for="class">Class *</Label>
 							<Select type="single" bind:value={stats.class}>
@@ -123,6 +133,10 @@
 									<SelectItem value="water">Water</SelectItem>
 								</SelectContent>
 							</Select>
+						</div>
+
+						<div class="space-y-2">
+							<PetSelect value={selectedPet} />
 						</div>
 					</div>
 
@@ -173,20 +187,6 @@
 							bind:value={stats.elemental}
 						/>
 					</div>
-
-					<div class="space-y-2">
-						<Label for="pet">Choose Your Pet</Label>
-						<Select type="single" bind:value={selectedPet}>
-							<SelectTrigger>Select a pet</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="shadowstripe">Shadowstripe</SelectItem>
-								<SelectItem value="phoenix">Phoenix</SelectItem>
-								<SelectItem value="dragon">Dragon</SelectItem>
-								<SelectItem value="unicorn">Unicorn</SelectItem>
-								<SelectItem value="griffin">Griffin</SelectItem>
-							</SelectContent>
-						</Select>
-					</div>
 				</CardContent>
 			</Card>
 
@@ -195,40 +195,8 @@
 				<CardHeader>
 					<CardTitle>Active Buffs</CardTitle>
 				</CardHeader>
-				<CardContent class="space-y-4">
-					<div class="space-y-4">
-						<div class="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-							<div>
-								<div class="text-sm font-medium">Priest Blessing</div>
-								<div class="text-xs text-slate-600">+5% Physical & Magic Damage</div>
-							</div>
-							<Switch bind:checked={buffs.striking} />
-						</div>
-
-						<div class="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-							<div>
-								<div class="text-sm font-medium">Blessing of Light</div>
-								<div class="text-xs text-slate-600">+10% Light Attack</div>
-							</div>
-							<Switch bind:checked={buffs.blessingOfLight} disabled={stats.element !== 'light'} />
-						</div>
-
-						<div class="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-							<div>
-								<div class="text-sm font-medium">Conviction Aura</div>
-								<div class="text-xs text-slate-600">+5% Light Attack</div>
-							</div>
-							<Switch bind:checked={buffs.convictionAura} disabled={stats.element !== 'light'} />
-						</div>
-
-						<div class="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-							<div>
-								<div class="text-sm font-medium">Battle Howl</div>
-								<div class="text-xs text-slate-600">+6% Physical & Magic Attack</div>
-							</div>
-							<Switch bind:checked={buffs.battleHowl} />
-						</div>
-					</div>
+				<CardContent class="space-y-6">
+					<BuffsSwitch {activeBuffs} />
 				</CardContent>
 			</Card>
 		</div>
@@ -241,13 +209,13 @@
 				<div class="space-y-2">
 					<Label for="boss">Target Boss *</Label>
 					<Select type="single" bind:value={selectedBoss}>
-						<SelectTrigger>Select target boss</SelectTrigger>
+						<SelectTrigger
+							>{selectedBoss ? titleCase(selectedBoss) : 'Select target boss'}</SelectTrigger
+						>
 						<SelectContent>
-							<SelectItem value="manticore">Manticore</SelectItem>
-							<SelectItem value="dragon">Ancient Dragon</SelectItem>
-							<SelectItem value="lich">Lich King</SelectItem>
-							<SelectItem value="golem">Stone Golem</SelectItem>
-							<SelectItem value="demon">Demon Lord</SelectItem>
+							{#each bossNames as bossName}
+								<SelectItem value={bossName}>{titleCase(bossName)}</SelectItem>
+							{/each}
 						</SelectContent>
 					</Select>
 				</div>
