@@ -1,0 +1,17 @@
+name,type,baseDamageRateDecimal,rateDecimalStepPerLevel,minLevel,maxLevel
+STOMP,Active,6.55,0.33,,
+FLYING SWING,Active,7.90,0.25,,
+CRISIS HOWL,Passive,2.83,0.70,,
+DASH BLOW,Passive,5.43,0.34,,
+DEMOLITION FIST,Active,9.05,0.31,,
+PUNISHING SWING,Active,8.14,0.54,,
+TAUNTING HOWL,Active,2.83,0.70,,
+CIRCLE SWING,Active,11.28,1.61,,
+RING BOMBS,Active,10.26,0.67,,
+SOCCER KICK COMBO,Active,4.76,0.40,,
+WHIRLWIND,Active,13.00,1.86,,
+ROLLING ATTACK,Active,11.28,1.61,,
+DIVITALIZING HOWL,Active,14.34,0,,1
+HAVOC HOWL,Active,14.40,0,,1
+CYCLONE AXE,Ultimate,40.00,0,1,1
+GIGANTIC BOMB,Ultimate,36.27,0,1,1

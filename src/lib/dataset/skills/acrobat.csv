@@ -1,0 +1,16 @@
+name,type,baseDamageRateDecimal,rateDecimalStepPerLevel,minLevel,maxLevel
+KICK SHOT,Active,5.04,0.16,,
+BINDING SHOT,Active,5.84,0.25,,
+DOUBLE SOMMERSAULT KICK,Passive,6.83,0.46,,
+SPIRAL VORTEX,Active,12.07,1.72,,
+DIVINE RAGE,Ultimate,60.30,0,1,1
+SPIRIT SHOT,Passive,5.84,0.21,,
+CIRCLE SHOT,Active,5.12,0.32,,
+COUNTER RING SHOT,Passive,6.03,0.75,,
+AIR POUNCE,Passive,5.91,0.19,,
+EAGLE DIVE,Active,7.05,0.25,,
+SPIRAL KICK,Passive,6.56,0.21,,
+BLOOMING KICK,Active,4.96,0.45,,
+CYCLONE KICK,Active,12.49,1.78,,
+SPIRAL EDGE,Ultimate,55.38,0,1,1
+CHARGED SHOT,Active,10.18,0.33,,
