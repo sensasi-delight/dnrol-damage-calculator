@@ -1,0 +1,17 @@
+name,type,baseDamageRateDecimal,rateDecimalStepPerLevel,minLevel,maxLevel
+GRAVITY BLAST,Active,7.66,0.25,,
+DARK TEMPLE,Active,12.60,0.39,,
+SUMMON BLACK HOLE,Active,20.12,1.06,,
+SUMMON COMET,Active,14.33,0.90,,
+GRAVITY ASCENSION,Active,36.62,5.23,,
+METEOR STORM,Ultimate,79.52,0,1,1
+LINEAR RAY,Active,11.60,0.37,,
+NINE TAIL LASER,Active,9.42,0.50,,
+FORCE MIRROR,Active,7.47,1.87,,
+SPECTRUM SHOWER,Active,17.23,2.46,,
+ERASER,Ultimate,66.67,0,1,1
+GRAVITY SPHERE,Passive,7.23,0.26,,
+VOID BLAST,Passive,7.15,0.45,,
+TIME STOP,Active,1.00,0,,2
+GRAVITY TRAP,Active,6.41,0.40,,
+TIME DODGE,Passive,1.00,0,,3
