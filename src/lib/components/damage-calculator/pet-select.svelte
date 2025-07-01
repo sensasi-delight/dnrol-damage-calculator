@@ -10,9 +10,10 @@
 	let { value: selectedPet } = $props();
 </script>
 
-<Label for="pet">Choose Your Pet</Label>
+<Label for="pet">Pet</Label>
 <Select type="single" bind:value={selectedPet}>
-	<SelectTrigger class="w-full">{selectedPet ? titleCase(selectedPet) : 'Select pet'}</SelectTrigger
+	<SelectTrigger class="w-full"
+		>{selectedPet ? titleCase(selectedPet) : 'Choose your pet'}</SelectTrigger
 	>
 	<SelectContent>
 		{#each petNames as petName}
