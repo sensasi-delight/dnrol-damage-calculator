@@ -1,43 +1,42 @@
 <script lang="ts">
+	// vendors
+	import { Calculator, Shield } from '@lucide/svelte';
+	import { titleCase } from 'title-case';
+	import { onMount } from 'svelte';
+	// uis
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { Label } from '$lib/components/ui/label';
 	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select';
 	import { Input } from '$lib/components/ui/input';
-	import { Calculator, Shield } from '@lucide/svelte';
-	import { type Job, jobNames } from '$lib/dataset/jobs';
-	import { titleCase } from 'title-case';
-	import Result from './damage-calculator/result.svelte';
+	// dataset
+	import { jobNames } from '$lib/dataset/jobs';
 	import { bossNames } from '$lib/dataset/bosses';
-	import { petNames } from '$lib/dataset/pets';
 	import buffsSet, { availableBuffJobs } from '$lib/dataset/buffs';
+	// utils
+	import { getLocalStorageData, setLocalStorageData } from '$lib/utils';
+	// components
+	import type FormValues from './damage-calculator/types/form-values';
+	import type Skill from '$lib/dataset/types/skill';
+	import Result from './damage-calculator/result-table.svelte';
 	import BuffsSwitch from './damage-calculator/buffs-switch.svelte';
 	import PetSelect from './damage-calculator/pet-select.svelte';
+	import getResult from './damage-calculator/functions/get-result';
+	import Button from './ui/button/button.svelte';
+	import skills from '$lib/dataset/skills';
 
-	let stats: {
-		class: Job | '';
-		element: 'neutral' | 'light' | 'dark' | 'fire' | 'water';
-		minBaseAttack: string;
-		maxBaseAttack: string;
-		critDamage: string;
-		finalDamage: string;
-		elemental: string;
-	} = $state({
-		class: '',
-		element: 'neutral',
-		minBaseAttack: '0',
-		maxBaseAttack: '0',
-		critDamage: '0',
-		finalDamage: '0',
-		elemental: '0'
-	});
+	const DEFAULT_FORM_VALUES: FormValues = {
+		job: undefined,
+		element: undefined,
+		minBaseAttack: 0,
+		maxBaseAttack: 0,
+		pet: undefined,
+		boss: 'apocalypse',
 
-	let selectedPet = $state('');
-	let selectedBoss = $state('');
+		critDamageRateDecimal: 0,
+		finalDamageRateDecimal: 0,
+		elementalDamageRateDecimal: 0,
 
-	let activeBuffs: {
-		[buffName: string]: boolean;
-	} = $state(
-		availableBuffJobs.reduce(
+		buffs: availableBuffJobs.reduce(
 			(acc, job) => {
 				buffsSet[job].flatMap((buff) => {
 					acc[buff.name] = false;
@@ -48,41 +47,74 @@
 			{} as {
 				[buffName: string]: boolean;
 			}
-		)
-	);
+		),
 
-	let results = $state({
-		totalDamage: 0,
-		finalDamage: 0,
-		elementDamage: 0,
-		normalDamage: 0,
-		criticalDamage: 0
+		skillLevels: []
+	};
+
+	let formValues = $state(DEFAULT_FORM_VALUES);
+
+	const LOCAL_STORAGE_KEY = 'formValues';
+
+	onMount(() => {
+		const storedValue = getLocalStorageData<FormValues>(LOCAL_STORAGE_KEY);
+
+		if (storedValue) {
+			formValues = storedValue;
+		}
 	});
 
-	const resetForm = () => {
-		stats = {
-			class: '',
-			element: 'neutral',
-			minBaseAttack: '0',
-			maxBaseAttack: '0',
-			critDamage: '0',
-			finalDamage: '0',
-			elemental: '0'
+	// const resetForm = () => {
+	// 	formValues = DEFAULT_FORM_VALUES;
+	// };
+
+	function handleStoreFormValues() {
+		const jobSkillIds = skills
+			.filter((skill) => skill.job === formValues.job)
+			.map((skill) => skill.id);
+
+		const copy = {
+			...formValues
 		};
-		selectedPet = '';
-		selectedBoss = '';
-		activeBuffs = {};
-		results = {
-			totalDamage: 0,
-			finalDamage: 0,
-			elementDamage: 0,
-			normalDamage: 0,
-			criticalDamage: 0
-		};
-	};
+
+		setLocalStorageData(LOCAL_STORAGE_KEY, {
+			...copy,
+
+			skillLevels: copy.skillLevels.filter((sl) => jobSkillIds.includes(sl.skillId))
+		});
+	}
+
+	let timer: number;
+
+	let result = $derived.by(() => {
+		clearTimeout(timer);
+		timer = setTimeout(() => handleStoreFormValues(), 750);
+
+		if (!formValues.job) {
+			return;
+		}
+
+		return getResult(formValues);
+	});
+
+	function handleSkillLevelChange(skillId: Skill['id'], level: number) {
+		const isLevelSet = formValues.skillLevels.some((sl) => sl.skillId === skillId);
+
+		if (isLevelSet) {
+			formValues.skillLevels = formValues.skillLevels.map((sl) => {
+				if (sl.skillId === skillId) {
+					return { skillId: skillId, level };
+				}
+
+				return sl;
+			});
+		} else {
+			formValues.skillLevels = [...formValues.skillLevels, { skillId, level }];
+		}
+	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-12 pb-32">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 pb-32 md:p-12">
 	<div class="mx-auto max-w-6xl">
 		<!-- Header -->
 		<div class="mb-8 text-center">
@@ -90,10 +122,10 @@
 				<Calculator class="h-8 w-8 text-blue-600" />
 				<h1 class="text-3xl font-bold text-slate-800">DNROL Damage Calculator</h1>
 			</div>
-			<p class="mx-auto max-w-2xl text-slate-600">
+			<!-- <p class="mx-auto max-w-2xl text-slate-600">
 				Calculate your character's damage output with precision. Configure your stats, select buffs,
 				and see detailed damage breakdowns.
-			</p>
+			</p> -->
 		</div>
 
 		<div class="grid gap-6 md:grid-cols-2">
@@ -106,48 +138,67 @@
 					</CardTitle>
 				</CardHeader>
 				<CardContent class="space-y-4">
-					<div class="grid grid-cols-3 gap-4">
+					<div class="space-y-2">
+						<Label for="class">Class *</Label>
+						<Select type="single" bind:value={formValues.job}>
+							<SelectTrigger class="w-full"
+								>{formValues.job ? titleCase(formValues.job) : 'Select class'}</SelectTrigger
+							>
+							<SelectContent>
+								{#each jobNames.toSorted() as jobName}
+									<SelectItem value={jobName}>{titleCase(jobName)}</SelectItem>
+								{/each}
+							</SelectContent>
+						</Select>
+					</div>
+
+					<div class="grid grid-cols-2 gap-4">
 						<div class="space-y-2">
-							<Label for="class">Class *</Label>
-							<Select type="single" bind:value={stats.class}>
+							<Label for="element">Element</Label>
+							<Select type="single" bind:value={formValues.element}>
 								<SelectTrigger class="w-full"
-									>{stats.class ? titleCase(stats.class) : 'Select class'}</SelectTrigger
+									>{formValues.element ? titleCase(formValues.element) : ''}</SelectTrigger
 								>
 								<SelectContent>
-									{#each jobNames as jobName}
-										<SelectItem value={jobName}>{titleCase(jobName)}</SelectItem>
-									{/each}
-								</SelectContent>
-							</Select>
-						</div>
-
-						<div class="space-y-2">
-							<Label for="element">Element *</Label>
-							<Select type="single" bind:value={stats.element}>
-								<SelectTrigger class="w-full">{titleCase(stats.element)}</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="neutral">Neutral</SelectItem>
 									<SelectItem value="light">Light</SelectItem>
 									<SelectItem value="dark">Dark</SelectItem>
 									<SelectItem value="fire">Fire</SelectItem>
 									<SelectItem value="water">Water</SelectItem>
+
+									<Button
+										class="w-full px-2"
+										variant="secondary"
+										size="sm"
+										onclick={(e) => {
+											e.stopPropagation();
+
+											formValues.element = undefined;
+										}}
+									>
+										Clear
+									</Button>
 								</SelectContent>
 							</Select>
 						</div>
 
 						<div class="space-y-2">
-							<PetSelect value={selectedPet} />
+							<PetSelect value={formValues.pet} />
 						</div>
-					</div>
 
-					<div class="grid grid-cols-2 gap-4">
 						<div class="space-y-2">
 							<Label for="min-attack">Min Base Attack *</Label>
 							<Input
 								id="min-attack"
 								type="number"
 								placeholder="0"
-								bind:value={stats.minBaseAttack}
+								min={0}
+								max={formValues.maxBaseAttack}
+								bind:value={formValues.minBaseAttack}
+								onchange={({ currentTarget: { value } }) => {
+									if (!formValues.maxBaseAttack) {
+										formValues.maxBaseAttack = Number(value);
+									}
+								}}
 							/>
 						</div>
 						<div class="space-y-2">
@@ -156,14 +207,27 @@
 								id="max-attack"
 								type="number"
 								placeholder="0"
-								bind:value={stats.maxBaseAttack}
+								min="0"
+								bind:value={formValues.maxBaseAttack}
+								onchange={({ currentTarget: { value } }) => {
+									if (!formValues.minBaseAttack) {
+										formValues.minBaseAttack = Number(value);
+									}
+								}}
 							/>
 						</div>
 					</div>
 
 					<div class="space-y-2">
 						<Label for="crit-damage">Critical Damage (%)</Label>
-						<Input id="crit-damage" type="number" placeholder="0" bind:value={stats.critDamage} />
+						<Input
+							id="crit-damage"
+							type="number"
+							step="0.01"
+							placeholder="0"
+							min="0"
+							bind:value={formValues.critDamageRateDecimal}
+						/>
 					</div>
 
 					<div class="space-y-2">
@@ -172,8 +236,8 @@
 							id="final-damage"
 							type="number"
 							step="0.01"
-							placeholder="0.00"
-							bind:value={stats.finalDamage}
+							placeholder="0"
+							bind:value={formValues.finalDamageRateDecimal}
 						/>
 					</div>
 
@@ -183,8 +247,8 @@
 							id="elemental"
 							type="number"
 							step="0.01"
-							placeholder="0.00"
-							bind:value={stats.elemental}
+							placeholder="0"
+							bind:value={formValues.elementalDamageRateDecimal}
 						/>
 					</div>
 				</CardContent>
@@ -196,7 +260,7 @@
 					<CardTitle>Active Buffs</CardTitle>
 				</CardHeader>
 				<CardContent class="space-y-6">
-					<BuffsSwitch {activeBuffs} />
+					<BuffsSwitch activeBuffs={formValues.buffs} />
 				</CardContent>
 			</Card>
 		</div>
@@ -208,9 +272,9 @@
 			<CardContent class="space-y-6">
 				<div class="space-y-2">
 					<Label for="boss">Target Boss *</Label>
-					<Select type="single" bind:value={selectedBoss}>
+					<Select type="single" bind:value={formValues.boss}>
 						<SelectTrigger
-							>{selectedBoss ? titleCase(selectedBoss) : 'Select target boss'}</SelectTrigger
+							>{formValues.boss ? titleCase(formValues.boss) : 'Select target boss'}</SelectTrigger
 						>
 						<SelectContent>
 							{#each bossNames as bossName}
@@ -220,8 +284,8 @@
 					</Select>
 				</div>
 
-				{#if stats.class}
-					<Result selectedClass={stats.class} />
+				{#if result}
+					<Result data={result} onSkillLevelChange={handleSkillLevelChange} />
 				{:else}
 					<div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
 						<p class="text-sm text-amber-800">
