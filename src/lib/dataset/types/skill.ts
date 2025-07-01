@@ -1,5 +1,12 @@
+import type { Job } from '$lib/dataset/jobs';
+
 export default interface Skill {
+	id: number;
+
+	job: Job;
+
 	name: string;
+
 	type: 'Active' | 'Passive' | 'Ultimate';
 
 	/**
@@ -17,12 +24,12 @@ export default interface Skill {
 	 *
 	 * @default 0
 	 */
-	minLevel?: number;
+	defaultLevel: number | null;
 
 	/**
 	 * Maximum level
 	 *
-	 * @default 1
+	 * @default 10
 	 */
-	maxLevel?: number;
+	maxLevel: number | null;
 }

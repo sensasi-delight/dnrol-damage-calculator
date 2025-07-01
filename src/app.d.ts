@@ -7,11 +7,6 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
-
-		declare module './skills/*.csv' {
-			const component: Skill[];
-			export default component;
-		}
 	}
 }
 

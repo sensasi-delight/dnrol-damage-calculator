@@ -1,0 +1,118 @@
+id,job,name,type,baseDamageRateDecimal,rateDecimalStepPerLevel,defaultLevel,maxLevel
+1,acrobat,KICK SHOT,Active,5.04,0.16,,
+2,acrobat,BINDING SHOT,Active,5.84,0.25,,
+3,acrobat,DOUBLE SOMMERSAULT KICK,Passive,6.83,0.46,,
+4,acrobat,SPIRAL VORTEX,Active,12.07,1.72,,
+5,acrobat,DIVINE RAGE,Ultimate,60.30,0,1,1
+6,acrobat,SPIRIT SHOT,Passive,5.84,0.21,,
+7,acrobat,CIRCLE SHOT,Active,5.12,0.32,,
+8,acrobat,COUNTER RING SHOT,Passive,6.03,0.75,,
+9,acrobat,AIR POUNCE,Passive,5.91,0.19,,
+10,acrobat,EAGLE DIVE,Active,7.05,0.25,,
+11,acrobat,SPIRAL KICK,Passive,6.56,0.21,,
+12,acrobat,BLOOMING KICK,Active,4.96,0.45,,
+13,acrobat,CYCLONE KICK,Active,12.49,1.78,,
+14,acrobat,SPIRAL EDGE,Ultimate,55.38,0,1,1
+15,acrobat,CHARGED SHOT,Active,10.18,0.33,,
+16,bow master,SCOPE ARROW,Active,7.57,0.24,,
+17,bow master,FAKE SHOT,Passive,6.10,0.38,,
+18,bow master,AERIAL CHAIN SHOT,Active,10.81,0.39,,
+19,bow master,SIEGE STANCE,Active,34.43,2.29,,
+20,bow master,ARROW SHOWER,Active,21.47,3.07,,
+21,bow master,ARROW BARRAGE,Ultimate,53.32,0,1,1
+22,bow master,SWIFT SHOT,Active,6.24,0.22,,
+23,bow master,RAPID SHOT,Active,7.46,0.39,,
+24,bow master,TRACKING ARROWS,Active,8.18,1.17,,
+25,bow master,REVOLUTION BALISTA,Ultimate,52.07,0,1,1
+26,bow master,BULLS EYE,Active,4.57,0.57,,
+27,bow master,TRIANGLE SHOT,Passive,5.98,0.26,,
+28,bow master,STUNNING SHOT,Active,4.57,0.38,,
+29,bow master,ANKLE SHOT,Active,6.22,0.78,,
+30,elemental lord,FIREBALL,Active,12.06,0.39,,
+31,elemental lord,FLAME SPARK,Passive,5.46,0.34,,
+32,elemental lord,FROST WIND,Passive,5.67,0.35,,
+33,elemental lord,ICY SHARDS,Active,6.12,0.20,,
+34,elemental lord,INFERNO,Active,20.52,0.73,,
+35,elemental lord,FREEZING FIELD,Active,11.08,0.40,,
+36,elemental lord,FIRE WALL,Active,11.96,0.63,,
+37,elemental lord,PHOENIX STORM,Active,7.76,0.48,,
+38,elemental lord,GLACIAL WAVE,Active,6.05,0.38,,
+39,elemental lord,FROZEN SPIKES,Active,6.00,0.32,,
+40,elemental lord,IGNITE,Active,14.54,1.21,,
+41,elemental lord,SHATTERED,Active,9.13,0.76,,
+42,elemental lord,FLAME ROAD,Active,29.42,4.20,,
+43,elemental lord,CHILLING MIST,Active,9.85,1.41,,
+44,elemental lord,FIERY VORTEX,Ultimate,58.62,0,1,1
+45,elemental lord,BLIZZARD,Ultimate,27.66,0,1,1
+46,force user,GRAVITY BLAST,Active,7.66,0.25,,
+47,force user,DARK TEMPLE,Active,12.60,0.39,,
+48,force user,SUMMON BLACK HOLE,Active,20.12,1.06,,
+49,force user,SUMMON COMET,Active,14.33,0.90,,
+50,force user,GRAVITY ASCENSION,Active,36.62,5.23,,
+51,force user,METEOR STORM,Ultimate,79.52,0,1,1
+52,force user,LINEAR RAY,Active,11.60,0.37,,
+53,force user,NINE TAIL LASER,Active,9.42,0.50,,
+54,force user,FORCE MIRROR,Active,7.47,1.87,,
+55,force user,SPECTRUM SHOWER,Active,17.23,2.46,,
+56,force user,ERASER,Ultimate,66.67,0,1,1
+57,force user,GRAVITY SPHERE,Passive,7.23,0.26,,
+58,force user,VOID BLAST,Passive,7.15,0.45,,
+59,force user,TIME STOP,Active,1.00,0,,2
+60,force user,GRAVITY TRAP,Active,6.41,0.40,,
+61,force user,TIME DODGE,Passive,1.00,0,,3
+62,mercenary,STOMP,Active,6.55,0.33,,
+63,mercenary,FLYING SWING,Active,7.90,0.25,,
+64,mercenary,CRISIS HOWL,Passive,2.83,0.70,,
+65,mercenary,DASH BLOW,Passive,5.43,0.34,,
+66,mercenary,DEMOLITION FIST,Active,9.05,0.31,,
+67,mercenary,PUNISHING SWING,Active,8.14,0.54,,
+68,mercenary,TAUNTING HOWL,Active,2.83,0.70,,
+69,mercenary,CIRCLE SWING,Active,11.28,1.61,,
+70,mercenary,RING BOMBS,Active,10.26,0.67,,
+71,mercenary,SOCCER KICK COMBO,Active,4.76,0.40,,
+72,mercenary,WHIRLWIND,Active,13.00,1.86,,
+73,mercenary,ROLLING ATTACK,Active,11.28,1.61,,
+74,mercenary,DIVITALIZING HOWL,Active,14.34,0,,1
+75,mercenary,HAVOC HOWL,Active,14.40,0,,1
+76,mercenary,CYCLONE AXE,Ultimate,40.00,0,1,1
+77,mercenary,GIGANTIC BOMB,Ultimate,36.27,0,1,1
+78,paladin,HOLY RELIC,Active,7.74,0.24,,
+79,paladin,SACRED HAMMERING,Active,1.12,0.28,,
+80,paladin,DIVINE BREAKER,Passive,3.71,0.12,,
+81,paladin,FAITH,Active,1.00,0.00,,
+82,paladin,DIVINE ASCENSION,Passive,4.08,0.26,,
+83,paladin,DIVINE VENGEANCE,Passive,3.39,0.42,,
+84,paladin,DIVINE AVATAR,Ultimate,13.80,0,1,1
+85,paladin,ARMOR BREAK,Active,7.77,0.65,,
+86,paladin,SHIELD CHARGE,Active,9.66,0.81,,
+87,paladin,LIGHTNING ZAP,Active,13.99,0.93,,
+88,paladin,ELECTRIC SMITE,Active,12.20,1.74,,
+89,paladin,THOR HAMMER,Ultimate,47.20,0,1,1
+90,priest,LIGHTNING STRIKE,Active,6.86,0.22,,
+91,priest,MIND BREAKER,Passive,6.92,0.43,,
+92,priest,CHAIN LIGHTNING,Active,6.77,0.29,,
+93,priest,DETONATE,Active,6.70,0.45,,
+94,priest,HEAVENLY JUDGEMENT,Ultimate,47.41,0,1,1
+95,priest,GRAND CROSS,Active,9.83,0.52,,
+96,priest,HOLY BURST,Active,7.78,1.11,,
+97,priest,AVENGING WAVE,Passive,5.54,0.58,,
+98,priest,LIGHTNING RELIC,Active,6.73,0.22,,
+99,priest,MIRACLE RELIC,Ultimate,14.43,0,1,1
+100,swordsman,TRIPLE SLASH,Active,8.77,0.28,,
+101,swordsman,DASH SLASH,Passive,5.23,0.33,,
+102,swordsman,DASH COMBO,Passive,5.29,0.33,,
+103,swordsman,AERIAL COMBO,Passive,10.09,0.36,,
+104,swordsman,MOONLIGHT SPLITTER,Active,8.43,0.27,,
+105,swordsman,FRONT SHOVE,Active,8.75,0.38,,
+106,swordsman,COUNTERATTACK SLASH,Passive,2.14,0.18,,
+107,swordsman,CYCLONE SLASH,Active,9.59,0.42,,
+108,swordsman,HACKING STANCE,Active,0.69,0.05,,
+109,swordsman,ECLIPSE,Active,4.65,0.39,,
+110,swordsman,COUNTER BLAST,Passive,2.28,0.29,,
+111,swordsman,CRESCENT CLEAVE,Active,15.22,1.02,,
+112,swordsman,LINE DRIVE,Active,11.27,1.61,,
+113,swordsman,PROVOKING SLAM,Active,10.63,1.33,,
+114,swordsman,COUNTER EXILE,Passive,11.28,0,,1
+115,swordsman,HALFMOON SLASH,Active,13.10,1.87,,
+116,swordsman,INFINITY EDGE,Ultimate,68.90,0,1,1
+117,swordsman,GREAT WAVE,Ultimate,51.58,0,1,1
