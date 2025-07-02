@@ -32,9 +32,9 @@
 		pet: undefined,
 		boss: 'apocalypse',
 
-		critDamageRateDecimal: 0,
-		finalDamageRateDecimal: 0,
-		elementalDamageRateDecimal: 0,
+		critDamageRate: 0,
+		finalDamageRate: 0,
+		elementalDamageRate: 0,
 
 		buffs: availableBuffJobs.reduce(
 			(acc, job) => {
@@ -114,10 +114,10 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 pb-32 md:p-12">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 pb-32 md:p-12 md:pb-32">
 	<div class="mx-auto max-w-6xl">
 		<!-- Header -->
-		<div class="mb-8 text-center">
+		<div class="mb-14 text-center">
 			<div class="mb-4 flex items-center justify-center gap-3">
 				<Calculator class="h-8 w-8 text-blue-600" />
 				<h1 class="text-3xl font-bold text-slate-800">DNROL Damage Calculator</h1>
@@ -182,7 +182,7 @@
 						</div>
 
 						<div class="space-y-2">
-							<PetSelect value={formValues.pet} />
+							<PetSelect bind:value={formValues.pet} />
 						</div>
 
 						<div class="space-y-2">
@@ -226,7 +226,7 @@
 							step="0.01"
 							placeholder="0"
 							min="0"
-							bind:value={formValues.critDamageRateDecimal}
+							bind:value={formValues.critDamageRate}
 						/>
 					</div>
 
@@ -237,7 +237,7 @@
 							type="number"
 							step="0.01"
 							placeholder="0"
-							bind:value={formValues.finalDamageRateDecimal}
+							bind:value={formValues.finalDamageRate}
 						/>
 					</div>
 
@@ -248,7 +248,7 @@
 							type="number"
 							step="0.01"
 							placeholder="0"
-							bind:value={formValues.elementalDamageRateDecimal}
+							bind:value={formValues.elementalDamageRate}
 						/>
 					</div>
 				</CardContent>
