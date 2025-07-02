@@ -18,8 +18,8 @@ const bosses: {
 } = {
 	'level 1 monster': {
 		defenses: {
-			normal: 0.72,
-			crit: 0.85
+			normal: 0.92,
+			crit: 1.08
 		}
 	},
 	minotaur: {
