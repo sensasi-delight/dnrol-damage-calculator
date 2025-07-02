@@ -1,8 +1,10 @@
 <script lang="ts">
 	// ui
 	import * as Table from '$lib/components/ui/table';
+	import { Info } from '@lucide/svelte';
 	//
 	import { Input } from '../ui/input';
+	import * as Tooltip from '../ui/tooltip';
 	import type ResultRow from './types/result-row';
 
 	let {
@@ -46,7 +48,9 @@
 				<Table.Cell>{index + 1}</Table.Cell>
 				<Table.Cell class="font-medium">
 					{row.skill.name}
-					<div class="text-xs text-slate-600">&times; {row.skill.baseDamageRateDecimal * 100}%</div>
+					<div class="text-xs text-slate-600">
+						&times; {formatNumber(row.skillDamageRateDecimal * 100)}%
+					</div>
 				</Table.Cell>
 				<Table.Cell>
 					<Input
@@ -65,8 +69,22 @@
 				<Table.Cell class="text-right">{formatNumber(row.finalDamage)}</Table.Cell>
 				<Table.Cell class="text-right">{formatNumber(row.elementalDamage)}</Table.Cell>
 				<Table.Cell class="text-right text-lg font-medium"
-					>{formatNumber(row.totalDamage)}</Table.Cell
-				>
+					>{formatNumber(row.totalDamage)}
+
+					<div class="flex justify-end">
+						<Tooltip.Provider>
+							<Tooltip.Root>
+								<Tooltip.Trigger class="flex items-center gap-0.5 text-xs font-bold text-amber-500">
+									<Info class="h-3 w-3" />
+									{formatNumber(row.criticalTotalDamage)}
+								</Tooltip.Trigger>
+								<Tooltip.Content side="left" class=" text-amber-400">
+									Critical Damage
+								</Tooltip.Content>
+							</Tooltip.Root>
+						</Tooltip.Provider>
+					</div>
+				</Table.Cell>
 			</Table.Row>
 		{/each}
 	</Table.Body>
