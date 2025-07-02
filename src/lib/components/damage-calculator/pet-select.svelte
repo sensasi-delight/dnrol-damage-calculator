@@ -7,14 +7,16 @@
 	// data
 	import { petNames } from '$lib/dataset/pets';
 
-	let { value: selectedPet } = $props();
+	let {
+		value = $bindable()
+	}: {
+		value?: (typeof petNames)[number];
+	} = $props();
 </script>
 
 <Label for="pet">Pet</Label>
-<Select type="single" bind:value={selectedPet}>
-	<SelectTrigger class="w-full"
-		>{selectedPet ? titleCase(selectedPet) : 'Choose your pet'}</SelectTrigger
-	>
+<Select type="single" bind:value name="pet">
+	<SelectTrigger class="w-full">{value ? titleCase(value) : 'Choose your pet'}</SelectTrigger>
 	<SelectContent>
 		{#each petNames as petName}
 			<SelectItem value={petName}>{titleCase(petName)}</SelectItem>
