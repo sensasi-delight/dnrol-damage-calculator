@@ -8,9 +8,10 @@ export default interface FormValues {
 	element: 'light' | 'dark' | 'fire' | 'water' | undefined;
 	minBaseAttack: number;
 	maxBaseAttack: number;
-	critDamageRateDecimal: number;
-	finalDamageRateDecimal: number;
-	elementalDamageRateDecimal: number;
+
+	critDamageRate: number;
+	finalDamageRate: number;
+	elementalDamageRate: number;
 
 	skillLevels: {
 		skillId: Skill['id'];
