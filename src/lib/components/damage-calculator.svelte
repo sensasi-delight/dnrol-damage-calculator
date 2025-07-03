@@ -70,9 +70,9 @@
 		}
 	});
 
-	// const resetForm = () => {
-	// 	formValues = DEFAULT_FORM_VALUES;
-	// };
+	const resetForm = () => {
+		formValues = DEFAULT_FORM_VALUES;
+	};
 
 	function handleStoreFormValues() {
 		const jobSkillIds = skills
@@ -300,6 +300,8 @@
 
 			{#if result}
 				<Result data={result} onSkillLevelChange={handleSkillLevelChange} />
+
+				<Button variant="destructive" size="sm" onclick={resetForm}>Clear Form</Button>
 			{:else}
 				<div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
 					<p class="text-sm text-amber-800">
