@@ -66,8 +66,8 @@
 					/>
 				</Table.Cell>
 				<Table.Cell class="text-right">{formatNumber(row.normalDamage)}</Table.Cell>
-				<Table.Cell class="text-right">{formatNumber(row.finalDamage)}</Table.Cell>
-				<Table.Cell class="text-right">{formatNumber(row.elementalDamage)}</Table.Cell>
+				<Table.Cell class="text-right">+{formatNumber(row.finalDamage)}</Table.Cell>
+				<Table.Cell class="text-right">+{formatNumber(row.elementalDamage)}</Table.Cell>
 				<Table.Cell class="text-right text-lg font-medium"
 					>{formatNumber(row.totalDamage)}
 
