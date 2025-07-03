@@ -114,186 +114,184 @@
 	}
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 pb-32 md:p-12 md:pb-32">
-	<div class="mx-auto max-w-6xl">
-		<!-- Header -->
-		<div class="mb-14 text-center">
-			<div class="mb-4 flex items-center justify-center gap-3">
-				<Calculator class="h-8 w-8 text-blue-600" />
-				<h1 class="text-3xl font-bold text-slate-800">DNROL Damage Calculator</h1>
-			</div>
-			<!-- <p class="mx-auto max-w-2xl text-slate-600">
-				Calculate your character's damage output with precision. Configure your stats, select buffs,
-				and see detailed damage breakdowns.
-			</p> -->
+<div class="mx-auto max-w-6xl">
+	<!-- Header -->
+	<div class="mb-14 text-center">
+		<div class="mb-4 flex items-center justify-center gap-3">
+			<Calculator class="h-8 w-8 text-blue-600" />
+			<h1 class="text-xl font-bold text-slate-800 sm:text-3xl">DNROL Damage Calculator</h1>
 		</div>
+		<!-- <p class="mx-auto max-w-2xl text-slate-600">
+			Calculate your character's damage output with precision. Configure your stats, select buffs,
+			and see detailed damage breakdowns.
+		</p> -->
+	</div>
 
-		<div class="grid gap-6 md:grid-cols-2">
-			<!-- Basic Info -->
-			<Card>
-				<CardHeader>
-					<CardTitle class="flex items-center gap-2">
-						<Shield class="h-5 w-5" />
-						Character Information
-					</CardTitle>
-				</CardHeader>
-				<CardContent class="space-y-4">
-					<div class="space-y-2">
-						<Label for="class">Class *</Label>
-						<Select type="single" bind:value={formValues.job}>
-							<SelectTrigger class="w-full"
-								>{formValues.job ? titleCase(formValues.job) : 'Select class'}</SelectTrigger
-							>
-							<SelectContent>
-								{#each jobNames.toSorted() as jobName}
-									<SelectItem value={jobName}>{titleCase(jobName)}</SelectItem>
-								{/each}
-							</SelectContent>
-						</Select>
-					</div>
-
-					<div class="grid grid-cols-2 gap-4">
-						<div class="space-y-2">
-							<Label for="element">Element</Label>
-							<Select type="single" bind:value={formValues.element}>
-								<SelectTrigger class="w-full"
-									>{formValues.element ? titleCase(formValues.element) : ''}</SelectTrigger
-								>
-								<SelectContent>
-									<SelectItem value="light">Light</SelectItem>
-									<SelectItem value="dark">Dark</SelectItem>
-									<SelectItem value="fire">Fire</SelectItem>
-									<SelectItem value="water">Water</SelectItem>
-
-									<Button
-										class="w-full px-2"
-										variant="secondary"
-										size="sm"
-										onclick={(e) => {
-											e.stopPropagation();
-
-											formValues.element = undefined;
-										}}
-									>
-										Clear
-									</Button>
-								</SelectContent>
-							</Select>
-						</div>
-
-						<div class="space-y-2">
-							<PetSelect bind:value={formValues.pet} />
-						</div>
-
-						<div class="space-y-2">
-							<Label for="min-attack">Min Base Attack *</Label>
-							<Input
-								id="min-attack"
-								type="number"
-								placeholder="0"
-								min={0}
-								max={formValues.maxBaseAttack}
-								bind:value={formValues.minBaseAttack}
-								onchange={({ currentTarget: { value } }) => {
-									if (!formValues.maxBaseAttack) {
-										formValues.maxBaseAttack = Number(value);
-									}
-								}}
-							/>
-						</div>
-						<div class="space-y-2">
-							<Label for="max-attack">Max Base Attack *</Label>
-							<Input
-								id="max-attack"
-								type="number"
-								placeholder="0"
-								min="0"
-								bind:value={formValues.maxBaseAttack}
-								onchange={({ currentTarget: { value } }) => {
-									if (!formValues.minBaseAttack) {
-										formValues.minBaseAttack = Number(value);
-									}
-								}}
-							/>
-						</div>
-					</div>
-
-					<div class="space-y-2">
-						<Label for="crit-damage">Critical Damage (%)</Label>
-						<Input
-							id="crit-damage"
-							type="number"
-							step="0.01"
-							placeholder="0"
-							min="0"
-							bind:value={formValues.critDamageRate}
-						/>
-					</div>
-
-					<div class="space-y-2">
-						<Label for="final-damage">Final Damage (%)</Label>
-						<Input
-							id="final-damage"
-							type="number"
-							step="0.01"
-							placeholder="0"
-							bind:value={formValues.finalDamageRate}
-						/>
-					</div>
-
-					<div class="space-y-2">
-						<Label for="elemental">Elemental Damage (%)</Label>
-						<Input
-							id="elemental"
-							type="number"
-							step="0.01"
-							placeholder="0"
-							bind:value={formValues.elementalDamageRate}
-						/>
-					</div>
-				</CardContent>
-			</Card>
-
-			<!-- Buffs -->
-			<Card>
-				<CardHeader>
-					<CardTitle>Active Buffs</CardTitle>
-				</CardHeader>
-				<CardContent class="space-y-6">
-					<BuffsSwitch activeBuffs={formValues.buffs} />
-				</CardContent>
-			</Card>
-		</div>
-
-		<Card class="mt-8">
+	<div class="grid gap-6 md:grid-cols-2">
+		<!-- Basic Info -->
+		<Card>
 			<CardHeader>
-				<CardTitle>Damage Calculation</CardTitle>
+				<CardTitle class="flex items-center gap-2">
+					<Shield class="h-5 w-5" />
+					Character Information
+				</CardTitle>
 			</CardHeader>
-			<CardContent class="space-y-6">
+			<CardContent class="space-y-4">
 				<div class="space-y-2">
-					<Label for="boss">Target Boss *</Label>
-					<Select type="single" bind:value={formValues.boss}>
-						<SelectTrigger
-							>{formValues.boss ? titleCase(formValues.boss) : 'Select target boss'}</SelectTrigger
+					<Label for="class">Class *</Label>
+					<Select type="single" bind:value={formValues.job}>
+						<SelectTrigger class="w-full"
+							>{formValues.job ? titleCase(formValues.job) : 'Select class'}</SelectTrigger
 						>
 						<SelectContent>
-							{#each bossNames as bossName}
-								<SelectItem value={bossName}>{titleCase(bossName)}</SelectItem>
+							{#each jobNames.toSorted() as jobName}
+								<SelectItem value={jobName}>{titleCase(jobName)}</SelectItem>
 							{/each}
 						</SelectContent>
 					</Select>
 				</div>
 
-				{#if result}
-					<Result data={result} onSkillLevelChange={handleSkillLevelChange} />
-				{:else}
-					<div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
-						<p class="text-sm text-amber-800">
-							Please fill in all required fields (*) to calculate damage.
-						</p>
+				<div class="grid grid-cols-2 gap-4">
+					<div class="space-y-2">
+						<Label for="element">Element</Label>
+						<Select type="single" bind:value={formValues.element}>
+							<SelectTrigger class="w-full"
+								>{formValues.element ? titleCase(formValues.element) : ''}</SelectTrigger
+							>
+							<SelectContent>
+								<SelectItem value="light">Light</SelectItem>
+								<SelectItem value="dark">Dark</SelectItem>
+								<SelectItem value="fire">Fire</SelectItem>
+								<SelectItem value="water">Water</SelectItem>
+
+								<Button
+									class="w-full px-2"
+									variant="secondary"
+									size="sm"
+									onclick={(e) => {
+										e.stopPropagation();
+
+										formValues.element = undefined;
+									}}
+								>
+									Clear
+								</Button>
+							</SelectContent>
+						</Select>
 					</div>
-				{/if}
+
+					<div class="space-y-2">
+						<PetSelect bind:value={formValues.pet} />
+					</div>
+
+					<div class="space-y-2">
+						<Label for="min-attack">Min Base Attack *</Label>
+						<Input
+							id="min-attack"
+							type="number"
+							placeholder="0"
+							min={0}
+							max={formValues.maxBaseAttack}
+							bind:value={formValues.minBaseAttack}
+							onchange={({ currentTarget: { value } }) => {
+								if (!formValues.maxBaseAttack) {
+									formValues.maxBaseAttack = Number(value);
+								}
+							}}
+						/>
+					</div>
+					<div class="space-y-2">
+						<Label for="max-attack">Max Base Attack *</Label>
+						<Input
+							id="max-attack"
+							type="number"
+							placeholder="0"
+							min="0"
+							bind:value={formValues.maxBaseAttack}
+							onchange={({ currentTarget: { value } }) => {
+								if (!formValues.minBaseAttack) {
+									formValues.minBaseAttack = Number(value);
+								}
+							}}
+						/>
+					</div>
+				</div>
+
+				<div class="space-y-2">
+					<Label for="crit-damage">Critical Damage (%)</Label>
+					<Input
+						id="crit-damage"
+						type="number"
+						step="0.01"
+						placeholder="0"
+						min="0"
+						bind:value={formValues.critDamageRate}
+					/>
+				</div>
+
+				<div class="space-y-2">
+					<Label for="final-damage">Final Damage (%)</Label>
+					<Input
+						id="final-damage"
+						type="number"
+						step="0.01"
+						placeholder="0"
+						bind:value={formValues.finalDamageRate}
+					/>
+				</div>
+
+				<div class="space-y-2">
+					<Label for="elemental">Elemental Damage (%)</Label>
+					<Input
+						id="elemental"
+						type="number"
+						step="0.01"
+						placeholder="0"
+						bind:value={formValues.elementalDamageRate}
+					/>
+				</div>
+			</CardContent>
+		</Card>
+
+		<!-- Buffs -->
+		<Card>
+			<CardHeader>
+				<CardTitle>Active Buffs</CardTitle>
+			</CardHeader>
+			<CardContent class="space-y-6">
+				<BuffsSwitch activeBuffs={formValues.buffs} />
 			</CardContent>
 		</Card>
 	</div>
+
+	<Card class="mt-8">
+		<CardHeader>
+			<CardTitle>Damage Calculation</CardTitle>
+		</CardHeader>
+		<CardContent class="space-y-6">
+			<div class="space-y-2">
+				<Label for="boss">Target Boss *</Label>
+				<Select type="single" bind:value={formValues.boss}>
+					<SelectTrigger
+						>{formValues.boss ? titleCase(formValues.boss) : 'Select target boss'}</SelectTrigger
+					>
+					<SelectContent>
+						{#each bossNames as bossName}
+							<SelectItem value={bossName}>{titleCase(bossName)}</SelectItem>
+						{/each}
+					</SelectContent>
+				</Select>
+			</div>
+
+			{#if result}
+				<Result data={result} onSkillLevelChange={handleSkillLevelChange} />
+			{:else}
+				<div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
+					<p class="text-sm text-amber-800">
+						Please fill in all required fields (*) to calculate damage.
+					</p>
+				</div>
+			{/if}
+		</CardContent>
+	</Card>
 </div>
