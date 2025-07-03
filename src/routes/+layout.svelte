@@ -8,8 +8,8 @@
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8 pb-12 md:p-12 md:pb-12">
 	{@render children()}
 
-	<footer class="mt-24">
-		<div class="mb-1 flex items-center justify-center gap-1">
+	<footer class="mt-24 space-y-1.5">
+		<div class="flex items-center justify-center gap-1">
 			<div class="text-xs text-slate-400">DNROL Damage Calculator</div>
 			<a
 				class=" text-blue-400 hover:text-blue-600 hover:underline"
@@ -25,6 +25,10 @@
 				class="text-xs text-blue-400 hover:text-blue-600 hover:underline"
 				href="https://sensasi-delight.web.app">Sensasi Delight</a
 			>
+		</div>
+
+		<div class="flex items-center justify-center gap-2">
+			<div class="text-xs text-slate-400">acknowledgement to Outlaw guild from TH 9</div>
 		</div>
 	</footer>
 </div>
