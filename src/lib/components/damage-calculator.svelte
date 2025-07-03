@@ -23,6 +23,12 @@
 	import getResult from './damage-calculator/functions/get-result';
 	import Button from './ui/button/button.svelte';
 	import skills from '$lib/dataset/skills';
+	import CriticalDamageLabel from './damage-calculator/critical-damage-label.svelte';
+	import ElementLabel from './damage-calculator/element-label.svelte';
+	import FinalDamageLabel from './damage-calculator/final-damage-label.svelte';
+	import ElementalLabel from './damage-calculator/elemental-label.svelte';
+	import BuffInfoDialog from './damage-calculator/buff-info-dialog.svelte';
+	import MinAttackLabel from './damage-calculator/min-attack-label.svelte';
 
 	const DEFAULT_FORM_VALUES: FormValues = {
 		job: undefined,
@@ -153,8 +159,9 @@
 
 				<div class="grid grid-cols-2 gap-4">
 					<div class="space-y-2">
-						<Label for="element">Element</Label>
-						<Select type="single" bind:value={formValues.element}>
+						<ElementLabel />
+
+						<Select name="element" type="single" bind:value={formValues.element}>
 							<SelectTrigger class="w-full"
 								>{formValues.element ? titleCase(formValues.element) : ''}</SelectTrigger
 							>
@@ -185,7 +192,8 @@
 					</div>
 
 					<div class="space-y-2">
-						<Label for="min-attack">Min Base Attack *</Label>
+						<MinAttackLabel />
+
 						<Input
 							id="min-attack"
 							type="number"
@@ -218,7 +226,8 @@
 				</div>
 
 				<div class="space-y-2">
-					<Label for="crit-damage">Critical Damage (%)</Label>
+					<CriticalDamageLabel />
+
 					<Input
 						id="crit-damage"
 						type="number"
@@ -230,7 +239,8 @@
 				</div>
 
 				<div class="space-y-2">
-					<Label for="final-damage">Final Damage (%)</Label>
+					<FinalDamageLabel />
+
 					<Input
 						id="final-damage"
 						type="number"
@@ -241,7 +251,7 @@
 				</div>
 
 				<div class="space-y-2">
-					<Label for="elemental">Elemental Damage (%)</Label>
+					<ElementalLabel />
 					<Input
 						id="elemental"
 						type="number"
@@ -256,7 +266,7 @@
 		<!-- Buffs -->
 		<Card>
 			<CardHeader>
-				<CardTitle>Active Buffs</CardTitle>
+				<BuffInfoDialog />
 			</CardHeader>
 			<CardContent class="space-y-6">
 				<BuffsSwitch activeBuffs={formValues.buffs} />
@@ -267,6 +277,11 @@
 	<Card class="mt-8">
 		<CardHeader>
 			<CardTitle>Damage Calculation</CardTitle>
+			<p class="text-xs text-slate-600">
+				This will not show your exact damage but it will show an estimate or close to your actual
+				damage or what your damage might be, since the game utilizes random number generation
+				mechanics for your damage.
+			</p>
 		</CardHeader>
 		<CardContent class="space-y-6">
 			<div class="space-y-2">
@@ -294,4 +309,15 @@
 			{/if}
 		</CardContent>
 	</Card>
+
+	<h2 class="mt-12 mb-4 text-xl font-bold text-slate-800">Overview</h2>
+
+	<p class="text-slate-600">
+		This calculator will serve in calculating for your total damage, when using skills this will
+		also serve as a way for you to compute whether adding Elemental stat will benefit from your
+		build or will it will lessen your total damage, if you ever plan to invest in Elemental stats.
+		Final damage and critical damage will also be included to this calculator, this will help you
+		determine how much damage will be added to your total damage, if you ever plan to invest in
+		final damage and critical damage.
+	</p>
 </div>
